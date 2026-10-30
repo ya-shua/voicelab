@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "VoiceLab 声音实验室",
+  "version": "0.1.0",
+  "description": "语音聊天、音色克隆、音色调音台。接智谱/硅基流动/DeepSeek/Kimi 等云 API，用户自带 Key（BYOK），录音与调音全部本地处理。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "VoiceLab 声音实验室",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://open.bigmodel.cn/*",
+    "https://api.siliconflow.cn/*",
+    "https://api.deepseek.com/*",
+    "https://api.moonshot.cn/*",
+    "https://dashscope.aliyuncs.com/*",
+    "https://api.openai.com/*",
+    "https://openrouter.ai/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "voicelab@hezhaochen.dev",
+      "strict_min_version": "115.0"
+    }
+  }
+}

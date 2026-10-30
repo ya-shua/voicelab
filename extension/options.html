@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>VoiceLab 设置</title>
+  <style>
+    :root { --bg:#0f1117; --panel:#171a23; --panel2:#1e2230; --line:#2a2f42; --text:#e8eaf2; --muted:#8b90a5; --accent:#6c5ce7; --accent2:#a29bfe; }
+    * { box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: "Microsoft YaHei", system-ui, sans-serif; margin: 0; padding: 24px; }
+    h1 { font-size: 20px; } h1 b { color: var(--accent2); }
+    h2 { font-size: 14px; color: var(--accent2); margin: 26px 0 10px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+    .card { max-width: 640px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+    label { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 4px; }
+    input, select {
+      width: 100%; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px;
+      color: var(--text); padding: 9px 10px; font-size: 13px; font-family: inherit;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--accent); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    button {
+      margin-top: 18px; padding: 10px 22px; border: 0; border-radius: 9px; cursor: pointer;
+      background: var(--accent); color: #fff; font-size: 14px;
+    }
+    button:hover { filter: brightness(1.15); }
+    .tip { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 6px; }
+    #saved { color: #2ecc71; font-size: 13px; margin-left: 12px; opacity: 0; transition: opacity .3s; }
+    #saved.show { opacity: 1; }
+    a { color: var(--accent2); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎙️ <b>VoiceLab</b> 设置 <span id="saved">已保存 ✓</span></h1>
+    <p class="tip">Key 只保存在你自己的浏览器里（chrome.storage.local），绝不打包、不上传。改完点底部保存。</p>
+
+    <h2>语音引擎（合成 / 识别 / 克隆）</h2>
+    <label>用哪家</label>
+    <select id="engine">
+      <option value="zhipu">智谱 BigModel（https://open.bigmodel.cn → API Keys）</option>
+      <option value="siliconflow">硅基流动（https://cloud.siliconflow.cn/account/ak，克隆需实名）</option>
+    </select>
+    <div class="row">
+      <div>
+        <label>智谱 API Key</label>
+        <input id="zhipuKey" type="password" placeholder="粘贴智谱的 Key" />
+      </div>
+      <div>
+        <label>硅基流动 API Key</label>
+        <input id="sfKey" type="password" placeholder="粘贴硅基流动的 Key" />
+      </div>
+    </div>
+
+    <h2>对话大模型（想用哪家填哪家）</h2>
+    <div class="row">
+      <div><label>DeepSeek（platform.deepseek.com）</label><input id="deepseekKey" type="password" /></div>
+      <div><label>月之暗面 Kimi（platform.moonshot.cn）</label><input id="moonshotKey" type="password" /></div>
+      <div><label>阿里百炼 Qwen（bailian.console.aliyun.com）</label><input id="dashscopeKey" type="password" /></div>
+      <div><label>OpenAI（platform.openai.com）</label><input id="openaiKey" type="password" /></div>
+      <div><label>OpenRouter（openrouter.ai）</label><input id="openrouterKey" type="password" /></div>
+    </div>
+    <label>自定义接入 Base URL（Ollama 例：http://127.0.0.1:11434/v1）</label>
+    <input id="customLlmBase" type="text" placeholder="http://127.0.0.1:11434/v1" />
+    <div class="row">
+      <div><label>自定义模型名（例：qwen2.5:7b）</label><input id="customLlmModel" type="text" /></div>
+      <div><label>自定义 Key（本地不用鉴权就随便填）</label><input id="customLlmKey" type="password" /></div>
+    </div>
+    <label>默认对话模型（留空 = 自动用第一个配了 Key 的）</label>
+    <select id="defaultLlm"><option value="">自动</option></select>
+
+    <h2>语音默认值</h2>
+    <div class="row">
+      <div><label>默认音色 id（留空用引擎默认）</label><input id="ttsVoice" type="text" placeholder="female 或 FunAudioLLM/CosyVoice2-0.5B:alex" /></div>
+      <div><label>语速 0.25~4.0</label><input id="ttsSpeed" type="number" step="0.05" min="0.25" max="4" value="1" /></div>
+    </div>
+
+    <button id="save">保存设置</button>
+    <p class="tip">音色克隆、调音台参数保存在工作台页面自己的本机存储里，不需要在这里配置。<br>
+    提示：用本地 Ollama 时，需要以 <code>OLLAMA_ORIGINS=*</code> 启动 Ollama 才允许扩展页面访问。</p>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

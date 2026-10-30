@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoiceLab · 声音实验室</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">🎙️ <b>VoiceLab</b> 声音实验室</div>
+    <div class="header-right">
+      <span id="provider-badge" class="badge">读取设置中…</span>
+      <button id="open-options" class="btn small" title="配置 API Key">⚙️ 设置</button>
+      <span id="key-status" class="dot" title="Key 状态"></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- 左：聊天区 -->
+    <section class="chat-panel">
+      <div id="messages" class="messages">
+        <div class="msg assistant">
+          <div class="bubble">你好！我是 VoiceLab 语音助手。打字或按住 🎤 说话，我会用右侧选中的音色回答你。</div>
+        </div>
+      </div>
+      <div class="composer">
+        <textarea id="input" rows="2" placeholder="输入文字，或点右侧麦克风说话…（Enter 发送）"></textarea>
+        <button id="send-btn" class="btn primary" title="发送">发送</button>
+        <button id="mic-btn" class="btn mic" title="录音说话">🎤</button>
+      </div>
+      <div id="rec-hint" class="rec-hint hidden">
+        <span class="rec-dot"></span>录音中 <b id="rec-time">0s</b>（最长 28 秒，自动停止）
+      </div>
+    </section>
+
+    <!-- 右：模型 / 音色 / 调音台 -->
+    <aside class="side-panel">
+      <h2>对话模型</h2>
+      <select id="llm-select"></select>
+      <p class="tip">能列出来哪些模型，取决于扩展设置里配了哪家的 KEY；🔒 = 还没配置。</p>
+
+      <h2>当前音色</h2>
+      <div class="voice-row">
+        <select id="voice-select"></select>
+        <button id="refresh-voices" class="btn small" title="重新拉取音色列表">↻</button>
+      </div>
+      <button id="try-voice" class="btn block">🔊 试听当前音色</button>
+
+      <h2>音色调音台</h2>
+      <div class="knob-grid" id="knob-grid"></div>
+      <div class="preset-row">
+        <button class="btn small preset" data-preset="warm">🔥 暖声</button>
+        <button class="btn small preset" data-preset="bright">✨ 清亮</button>
+        <button class="btn small preset" data-preset="flat">↺ 还原</button>
+        <button id="fx-bypass" class="btn small" title="播放时跳过调音台，对比原始声音">原声对比</button>
+      </div>
+      <p class="tip">旋钮实时作用于播放中的声音（聊天回复和试听都会经过调音台），拖动时直接听效果；双击旋钮回到中位。它只改变播放，不改变音色本身。</p>
+
+      <h2>克隆新音色</h2>
+      <div id="clone-box" class="clone-box">
+        <label>音色名字</label>
+        <input id="clone-name" type="text" placeholder="例如：我的音色" />
+        <label>参考音频文稿 <small>（音频里说的内容，写了克隆更像）</small></label>
+        <textarea id="clone-text" rows="2" placeholder="照着念的文字，例如：今天天气很好，我们一起去公园散步吧。"></textarea>
+        <label>参考音频 <small id="clone-tip">智谱 3~30 秒；硅基流动 8~10 秒最佳，需实名</small></label>
+        <div class="clone-source">
+          <button id="rec-ref-btn" class="btn small">🎤 录一段</button>
+          <label class="btn small file-btn">📂 选文件<input id="clone-file" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" hidden /></label>
+          <span id="ref-state" class="ref-state">未选择</span>
+        </div>
+        <button id="clone-submit" class="btn primary block">开始克隆</button>
+        <p class="tip">⚠️ 只克隆自己或已获授权的声音。克隆音色保存在本机浏览器里。</p>
+      </div>
+
+      <h2>说明</h2>
+      <ul class="tips">
+        <li>API Key 在扩展「⚙️ 设置」里配置，存于本机，不会上传。</li>
+        <li>首次录音浏览器会请求麦克风权限，允许即可。</li>
+        <li>录音最长 28 秒（识别接口的上限是 30 秒）。</li>
+      </ul>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      width: 260px; margin: 0; padding: 14px;
+      background: #171a23; color: #e8eaf2;
+      font-family: "Microsoft YaHei", system-ui, sans-serif; font-size: 13px;
+    }
+    .logo { font-size: 15px; margin-bottom: 10px; }
+    .logo b { color: #a29bfe; }
+    .status { color: #8b90a5; line-height: 1.7; margin-bottom: 12px; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ff6b6b; margin-right: 6px; }
+    .dot.ok { background: #2ecc71; }
+    button {
+      display: block; width: 100%; margin-top: 8px; padding: 9px 0;
+      border: 1px solid #2a2f42; border-radius: 9px; cursor: pointer;
+      background: #232838; color: #e8eaf2; font-size: 13px;
+    }
+    button.primary { background: #6c5ce7; border-color: #6c5ce7; }
+    button:hover { filter: brightness(1.2); }
+  </style>
+</head>
+<body>
+  <div class="logo">🎙️ <b>VoiceLab</b> 声音实验室</div>
+  <div class="status" id="status">读取设置中…</div>
+  <button id="open-main" class="primary">打开工作台</button>
+  <button id="open-options">⚙️ 设置（API Key）</button>
+  <script src="popup.js"></script>
+</body>
+</html>
